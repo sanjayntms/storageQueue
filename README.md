@@ -1,6 +1,3 @@
-# storageQueue
-On Linux VM
-export AZURE_STORAGE_CONNECTION_STRING="your_azure_storage_connection_string"
 ## Azure Storage Queue
    Azure Storage Queue is a robust and cost-effective messaging service designed for asynchronous communication between different components of cloud applications. It 
    acts as a buffer, allowing components to send and receive messages reliably, regardless of whether other components are simultaneously active.
