@@ -33,8 +33,8 @@
 
 
 # Create Linux VM
-  Cpoy app.py and worker.py (On same vm or you can deploy two VM)
-  Create folder templates and copy index.html, upload_success.html
-  Open port 3000 in NSG
-  Create storage account and check app.py for blobs and queue containers.
-  Export AZURE_STORAGE_CONNECTION_STRING="your_azure_storage_connection_string"
+ *  Cpoy app.py and worker.py (On same vm or you can deploy two VM)
+ *  Create folder templates and copy index.html, upload_success.html
+ *  Open port 3000 in NSG
+ *  Create storage account and check app.py for blobs and queue containers.
+ *  Export AZURE_STORAGE_CONNECTION_STRING="your_azure_storage_connection_string"
