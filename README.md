@@ -33,8 +33,37 @@
 
 
 # Create Linux VM
- *  Cpoy app.py and worker.py (On same vm or you can deploy two VM)
+ *  sudo apt update
+ *  sudo apt install python3 python3-pip -y  # For Ubuntu
+ *  sudo apt install python3-venv -y 
+ *  python3 -m venv venv
+ *  source venv/bin/activate
+ *  pip3 install Pillow
+ *  Cpoy app.py and worker.py (On same vm or you can deploy two VM),
+ *  python3 worker.py &
+ *  python3 app.py
  *  Create folder templates and copy index.html, upload_success.html
  *  Open port 3000 in NSG
  *  Create storage account and check app.py for blobs and queue containers.
  *  Export AZURE_STORAGE_CONNECTION_STRING="your_azure_storage_connection_string"
+## Conceptual Outline:
+
+* Web Application (The Producer): app.py 
+  Provides a simple user interface (e.g., an HTML page) where a user can upload an image.
+  Upon successful upload, instead of processing the image directly, it creates a message containing the image's details (e.g., its name or a URL if stored in Azure 
+  Blob Storage) and enqueues this message into an Azure Storage Queue.
+  Immediately acknowledges the upload to the user, without waiting for the image processing to complete.
+
+* Azure Storage Queue (The Message Broker):
+  Acts as the intermediary, holding the messages containing image processing instructions.
+
+* Worker Role/Function (The Consumer): worker.py
+  Continuously monitors the Azure Storage Queue for new messages.
+  When a message arrives, it retrieves it from the queue.
+  Performs the "long-running or resource-intensive" task – in this case, a simplified image processing task like:
+  Resizing the image to a smaller size.
+  Adding a simple watermark (e.g., some text).
+  Perhaps just logging that the processing has started and finished (for a very basic demo).
+  Optionally, it can store the processed image in another location (e.g., Azure Blob Storage) and potentially notify the user (though notification is beyond the scope 
+  of basic asynchronous processing).
+* Testing of Queue: kill worker.py, upload images, check queue ---after some time, run worker.py and check queue 
